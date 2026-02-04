@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Hub | Mr Zufar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background-color: #020617; color: white;
+            scroll-behavior: smooth;
+        }
+
+        /* High-Quality Background */
+        .bg-fixed {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(2, 6, 23, 0.7), rgba(2, 6, 23, 0.7)), 
+                        url('https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; background-position: center; z-index: -1;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; text-align: center; }
+
+        h1 { font-size: 3rem; margin-bottom: 5px; font-weight: 700; }
+        .creator-tag { font-weight: 300; font-size: 1.2rem; color: #94a3b8; margin-bottom: 50px; }
+
+        /* Main Category Selection */
+        .category-nav {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px; margin-bottom: 40px;
+        }
+
+        .nav-card {
+            background: var(--glass); backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border); padding: 30px;
+            border-radius: 20px; cursor: pointer; transition: 0.3s;
+        }
+
+        .nav-card:hover { background: rgba(255,255,255,0.2); transform: translateY(-5px); }
+        .nav-card i { font-size: 2.5rem; margin-bottom: 15px; color: var(--primary); }
+
+        /* Quiz Grid Sections */
+        .quiz-section {
+            display: none; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px; animation: fadeIn 0.5s ease forwards;
+            margin-top: 20px; border-top: 1px solid var(--glass-border); padding-top: 30px;
+        }
+
+        .quiz-card {
+            background: rgba(15, 23, 42, 0.6); border-radius: 15px;
+            overflow: hidden; border: 1px solid var(--glass-border);
+            text-decoration: none; color: white; transition: 0.3s;
+        }
+
+        .quiz-card:hover { transform: scale(1.05); border-color: var(--primary); background: rgba(30, 41, 59, 0.8); }
+
+        .quiz-img {
+            width: 100%; height: 120px; object-fit: cover;
+            filter: brightness(0.7); transition: 0.3s;
+        }
+
+        .quiz-card:hover .quiz-img { filter: brightness(1); }
+
+        .quiz-info { padding: 15px; font-weight: 600; font-size: 0.9rem; }
+
+        /* Helpers */
+        .active-section { display: grid !important; }
+        .hidden { display: none; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-speak {
+            background: #10b981; color: white; text-decoration: none;
+            padding: 20px; border-radius: 15px; display: block; font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-fixed"></div>
+
+<div class="container">
+    <h1>Exam Preparations</h1>
+    <p class="creator-tag">Platform created by Mr Zufar</p>
+
+    <div class="category-nav">
+        <div class="nav-card" onclick="openAspect('grammar')">
+            <i class="fas fa-brain"></i>
+            <h3>Grammar</h3>
+        </div>
+        <div class="nav-card" onclick="openAspect('vocabulary')">
+            <i class="fas fa-language"></i>
+            <h3>Vocabulary</h3>
+        </div>
+        <div class="nav-card" onclick="window.open('https://zufarsayfullo-sys.github.io/Speaking/', '_blank')">
+            <i class="fas fa-microphone"></i>
+            <h3>Speaking</h3>
+        </div>
+    </div>
+
+    <div id="grammar" class="quiz-section">
+        <a href="https://zufarsayfullo-sys.github.io/Question/questionsquiz.html" target="_blank" class="quiz-card">
+            <img src="https://images.unsplash.com/photo-1453733190371-0a9bedd82893?w=400" class="quiz-img">
+            <div class="quiz-info">Questions Quiz</div>
+        </a>
+        <a href="https://zufarsayfullo-sys.github.io/Conditonal-first/" target="_blank" class="quiz-card">
+            <img src="https://images.unsplash.com/photo-1516533075015-a3838414c3ca?w=400" class="quiz-img">
+            <div class="quiz-info">1st Conditional</div>
+        </a>
+        <a href="https://zufarsayfullo-sys.github.io/Conditonal-third/" target="_blank" class="quiz-card">
+            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400" class="quiz-img">
+            <div class="quiz-info">3rd Conditional</div>
+        </a>
+        <a href="https://zufarsayfullo-sys.github.io/Passive/" target="_blank" class="quiz-card">
+            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400" class="quiz-img">
+            <div class="quiz-info">Passive Voice</div>
+        </a>
+        <a href="https://zufarsayfullo-sys.github.io/Reported-speech/" target="_blank" class="quiz-card">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400" class="quiz-img">
+            <div class="quiz-info">Reported Speech</div>
+        </a>
+        <a href="https://zufarsayfullo-sys.github.io/Should/" target="_blank" class="quiz-card">
+            <img src="https://images.unsplash.com/photo-1510070112810-d4e9a46d9e91?w=400" class="quiz-img">
+            <div class="quiz-info">Should(n't) have</div>
+        </a>
+        <a href="https://zufarsayfullo-sys.github.io/Comparing/" target="_blank" class="quiz-card">
+            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400" class="quiz-img">
+            <div class="quiz-info">Comparing</div>
+        </a>
+    </div>
+
+    <div id="vocabulary" class="quiz-section">
+        <a href="https://zufarsayfullo-sys.github.io/work/" target="_blank" class="quiz-card">
+            <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=400" class="quiz-img">
+            <div class="quiz-info">Work Conditions</div>
+        </a>
+        <a href="https://zufarsayfullo-sys.github.io/Prefexes/" target="_blank" class="quiz-card">
+            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400" class="quiz-img">
+            <div class="quiz-info">Prefixes</div>
+        </a>
+        <a href="https://zufarsayfullo-sys.github.io/Have-take/" target="_blank" class="quiz-card">
+            <img src="https://images.unsplash.com/photo-1484417894907-623942c8ee29?w=400" class="quiz-img">
+            <div class="quiz-info">Have / Take</div>
+        </a>
+        <a href="https://zufarsayfullo-sys.github.io/Decribing-/" target="_blank" class="quiz-card">
+            <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400" class="quiz-img">
+            <div class="quiz-info">Describing People</div>
+        </a>
+    </div>
+
+</div>
+
+<script>
+    function openAspect(id) {
+        // Hide all quiz sections
+        const sections = document.querySelectorAll('.quiz-section');
+        sections.forEach(sec => sec.classList.remove('active-section'));
+        
+        // Show the clicked one
+        const target = document.getElementById(id);
+        target.classList.add('active-section');
+        
+        // Smooth scroll to the content
+        setTimeout(() => {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    }
+</script>
+
+</body>
+</html>
