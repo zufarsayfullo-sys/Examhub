@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +9,8 @@
     <style>
         :root {
             --primary: #6366f1;
+            --secondary: #06d6a0;
+            --accent: #f59e0b;
             --glass: rgba(255, 255, 255, 0.1);
             --glass-border: rgba(255, 255, 255, 0.2);
         }
@@ -31,27 +32,33 @@
 
         .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; text-align: center; }
 
-        h1 { font-size: 3rem; margin-bottom: 5px; font-weight: 700; }
+        h1 { font-size: 3rem; margin-bottom: 5px; font-weight: 700; background: linear-gradient(135deg, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .creator-tag { font-weight: 300; font-size: 1.2rem; color: #94a3b8; margin-bottom: 50px; }
 
         /* Main Category Selection */
         .category-nav {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 20px; margin-bottom: 40px;
         }
 
         .nav-card {
             background: var(--glass); backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border); padding: 30px;
+            border: 1px solid var(--glass-border); padding: 25px 20px;
             border-radius: 20px; cursor: pointer; transition: 0.3s;
         }
 
         .nav-card:hover { background: rgba(255,255,255,0.2); transform: translateY(-5px); }
-        .nav-card i { font-size: 2.5rem; margin-bottom: 15px; color: var(--primary); }
+        .nav-card i { font-size: 2rem; margin-bottom: 12px; }
+        .nav-card[data-cat="grammar"] i { color: var(--primary); }
+        .nav-card[data-cat="vocabulary"] i { color: #10b981; }
+        .nav-card[data-cat="reading"] i { color: var(--accent); }
+        .nav-card[data-cat="writing"] i { color: var(--secondary); }
+        .nav-card[data-cat="speaking"] i { color: #ef4444; }
+        .nav-card h3 { font-size: 1rem; margin: 0; }
 
         /* Quiz Grid Sections */
         .quiz-section {
-            display: none; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            display: none; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 20px; animation: fadeIn 0.5s ease forwards;
             margin-top: 20px; border-top: 1px solid var(--glass-border); padding-top: 30px;
         }
@@ -60,28 +67,35 @@
             background: rgba(15, 23, 42, 0.6); border-radius: 15px;
             overflow: hidden; border: 1px solid var(--glass-border);
             text-decoration: none; color: white; transition: 0.3s;
+            display: block;
         }
 
-        .quiz-card:hover { transform: scale(1.05); border-color: var(--primary); background: rgba(30, 41, 59, 0.8); }
+        .quiz-card:hover { transform: scale(1.03); border-color: var(--primary); background: rgba(30, 41, 59, 0.8); }
 
         .quiz-img {
-            width: 100%; height: 120px; object-fit: cover;
+            width: 100%; height: 130px; object-fit: cover;
             filter: brightness(0.7); transition: 0.3s;
         }
 
         .quiz-card:hover .quiz-img { filter: brightness(1); }
 
-        .quiz-info { padding: 15px; font-weight: 600; font-size: 0.9rem; }
+        .quiz-info { padding: 15px; font-weight: 600; font-size: 0.9rem; text-align: left; }
+        .quiz-info i { margin-right: 8px; opacity: 0.7; }
+
+        /* Section Headers */
+        .section-header {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 20px; font-size: 1.5rem; font-weight: 600;
+        }
+        .section-header i { font-size: 1.8rem; }
 
         /* Helpers */
         .active-section { display: grid !important; }
         .hidden { display: none; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .btn-speak {
-            background: #10b981; color: white; text-decoration: none;
-            padding: 20px; border-radius: 15px; display: block; font-weight: 700;
-        }
+        /* Default open section */
+        #grammar { display: grid; }
     </style>
 </head>
 <body>
@@ -93,67 +107,114 @@
     <p class="creator-tag">Platform created by Mr Zufar</p>
 
     <div class="category-nav">
-        <div class="nav-card" onclick="openAspect('grammar')">
+        <div class="nav-card" data-cat="grammar" onclick="openAspect('grammar')">
             <i class="fas fa-brain"></i>
             <h3>Grammar</h3>
         </div>
-        <div class="nav-card" onclick="openAspect('vocabulary')">
+        <div class="nav-card" data-cat="vocabulary" onclick="openAspect('vocabulary')">
             <i class="fas fa-language"></i>
             <h3>Vocabulary</h3>
         </div>
-        <div class="nav-card" onclick="window.open('https://zufarsayfullo-sys.github.io/Speaking/', '_blank')">
-            <i class="fas fa-microphone"></i>
+        <div class="nav-card" data-cat="reading" onclick="openAspect('reading')">
+            <i class="fas fa-book-open"></i>
+            <h3>Reading</h3>
+        </div>
+        <div class="nav-card" data-cat="writing" onclick="openAspect('writing')">
+            <i class="fas fa-pen-fancy"></i>
+            <h3>Writing</h3>
+        </div>
+        <div class="nav-card" data-cat="speaking" onclick="openAspect('speaking')">
+            <i class="fas fa-microphone-alt"></i>
             <h3>Speaking</h3>
         </div>
     </div>
 
+    <!-- GRAMMAR SECTION -->
     <div id="grammar" class="quiz-section">
+        <div class="section-header"><i class="fas fa-brain" style="color: var(--primary);"></i> Grammar Quizzes</div>
         <a href="https://zufarsayfullo-sys.github.io/Question/questionsquiz.html" target="_blank" class="quiz-card">
             <img src="https://images.unsplash.com/photo-1453733190371-0a9bedd82893?w=400" class="quiz-img">
-            <div class="quiz-info">Questions Quiz</div>
+            <div class="quiz-info"><i class="fas fa-question-circle"></i> Questions Quiz</div>
         </a>
         <a href="https://zufarsayfullo-sys.github.io/Conditonal-first/" target="_blank" class="quiz-card">
             <img src="https://images.unsplash.com/photo-1516533075015-a3838414c3ca?w=400" class="quiz-img">
-            <div class="quiz-info">1st Conditional</div>
+            <div class="quiz-info"><i class="fas fa-code-branch"></i> 1st Conditional</div>
         </a>
         <a href="https://zufarsayfullo-sys.github.io/Conditonal-third/" target="_blank" class="quiz-card">
             <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400" class="quiz-img">
-            <div class="quiz-info">3rd Conditional</div>
+            <div class="quiz-info"><i class="fas fa-history"></i> 3rd Conditional</div>
         </a>
         <a href="https://zufarsayfullo-sys.github.io/Passive/" target="_blank" class="quiz-card">
             <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400" class="quiz-img">
-            <div class="quiz-info">Passive Voice</div>
+            <div class="quiz-info"><i class="fas fa-exchange-alt"></i> Passive Voice</div>
         </a>
         <a href="https://zufarsayfullo-sys.github.io/Reported-speech/" target="_blank" class="quiz-card">
             <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400" class="quiz-img">
-            <div class="quiz-info">Reported Speech</div>
+            <div class="quiz-info"><i class="fas fa-comment-dots"></i> Reported Speech</div>
         </a>
         <a href="https://zufarsayfullo-sys.github.io/Should/" target="_blank" class="quiz-card">
             <img src="https://images.unsplash.com/photo-1510070112810-d4e9a46d9e91?w=400" class="quiz-img">
-            <div class="quiz-info">Should(n't) have</div>
+            <div class="quiz-info"><i class="fas fa-exclamation-triangle"></i> Should(n't) have</div>
         </a>
         <a href="https://zufarsayfullo-sys.github.io/Comparing/" target="_blank" class="quiz-card">
             <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400" class="quiz-img">
-            <div class="quiz-info">Comparing</div>
+            <div class="quiz-info"><i class="fas fa-balance-scale"></i> Comparing</div>
         </a>
     </div>
 
+    <!-- VOCABULARY SECTION -->
     <div id="vocabulary" class="quiz-section">
+        <div class="section-header"><i class="fas fa-language" style="color: #10b981;"></i> Vocabulary Quizzes</div>
         <a href="https://zufarsayfullo-sys.github.io/work/" target="_blank" class="quiz-card">
             <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=400" class="quiz-img">
-            <div class="quiz-info">Work Conditions</div>
+            <div class="quiz-info"><i class="fas fa-briefcase"></i> Work Conditions</div>
         </a>
         <a href="https://zufarsayfullo-sys.github.io/Prefexes/" target="_blank" class="quiz-card">
             <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400" class="quiz-img">
-            <div class="quiz-info">Prefixes</div>
+            <div class="quiz-info"><i class="fas fa-plus-circle"></i> Prefixes</div>
         </a>
         <a href="https://zufarsayfullo-sys.github.io/Have-take/" target="_blank" class="quiz-card">
             <img src="https://images.unsplash.com/photo-1484417894907-623942c8ee29?w=400" class="quiz-img">
-            <div class="quiz-info">Have / Take</div>
+            <div class="quiz-info"><i class="fas fa-hand-paper"></i> Have / Take</div>
         </a>
         <a href="https://zufarsayfullo-sys.github.io/Decribing-/" target="_blank" class="quiz-card">
             <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400" class="quiz-img">
-            <div class="quiz-info">Describing People</div>
+            <div class="quiz-info"><i class="fas fa-user-friends"></i> Describing People</div>
+        </a>
+    </div>
+
+    <!-- READING SECTION (NEW) -->
+    <div id="reading" class="quiz-section">
+        <div class="section-header"><i class="fas fa-book-open" style="color: var(--accent);"></i> Reading Comprehension</div>
+        <a href="https://zufarsayfullo-sys.github.io/interreading/" target="_blank" class="quiz-card">
+            <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=400" class="quiz-img">
+            <div class="quiz-info"><i class="fas fa-book"></i> Intermediate Reading</div>
+        </a>
+        <a href="https://zufarsayfullo-sys.github.io/upperreading/" target="_blank" class="quiz-card">
+            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400" class="quiz-img">
+            <div class="quiz-info"><i class="fas fa-graduation-cap"></i> Upper-Intermediate Reading</div>
+        </a>
+    </div>
+
+    <!-- WRITING SECTION (NEW) -->
+    <div id="writing" class="quiz-section">
+        <div class="section-header"><i class="fas fa-pen-fancy" style="color: var(--secondary);"></i> Writing Practice</div>
+        <a href="https://zufarsayfullo-sys.github.io/writingintermediate/" target="_blank" class="quiz-card">
+            <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400" class="quiz-img">
+            <div class="quiz-info"><i class="fas fa-pen-alt"></i> Intermediate Writing</div>
+        </a>
+        <a href="https://zufarsayfullo-sys.github.io/upperwriting/" target="_blank" class="quiz-card">
+            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400" class="quiz-img">
+            <div class="quiz-info"><i class="fas fa-file-alt"></i> Upper-Intermediate Writing</div>
+        </a>
+    </div>
+
+    <!-- SPEAKING SECTION -->
+    <div id="speaking" class="quiz-section">
+        <div class="section-header"><i class="fas fa-microphone-alt" style="color: #ef4444;"></i> Speaking Practice</div>
+        <a href="https://zufarsayfullo-sys.github.io/Speaking/" target="_blank" class="quiz-card">
+            <img src="https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?w=400" class="quiz-img">
+            <div class="quiz-info"><i class="fas fa-comments"></i> Speaking Exam Platform</div>
         </a>
     </div>
 
@@ -174,6 +235,11 @@
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 100);
     }
+
+    // Set default active section on load
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('grammar').classList.add('active-section');
+    });
 </script>
 
 </body>
